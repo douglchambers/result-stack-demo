@@ -1,6 +1,10 @@
 <template>
   <div class="github-results">
     <div
+      v-if="hasSearched">
+      Showing Results for: "{{ }}
+    </div>
+    <div
         v-if="results.length > 0"
     >
       <div
@@ -29,7 +33,7 @@ export default {
   methods: {},
   computed: {
     ...mapGetters('GithubResults', {
-      results: 'results',
+      results: 'resultsForSearch',
     })
   },
   data() {

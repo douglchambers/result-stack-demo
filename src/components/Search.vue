@@ -16,11 +16,19 @@
 <script>
 export default {
   name: 'Search',
-  props: {},
+  props: [
+    'query',
+  ],
   methods: {
     submitSearch() {
-      this.$store.dispatch('GithubResults/search', this.searchValue);
+      this.$store.dispatch('GithubResults/search', this.searchValue, 1);
     },
+  },
+  updated() {
+    if (this.searchValue != this.query && this.query != '') {
+      this.searchValue = this.query;
+      this.submitSearch();
+    }
   },
   data() {
     return {
