@@ -1,10 +1,10 @@
 <template>
   <div class="github-results">
     <div
-        v-if="githubResults.length > 0"
+        v-if="results.length > 0"
     >
       <div
-        v-for="result in githubResults"
+        v-for="result in results"
         :key="result.id"
         >
         <pre>
@@ -21,15 +21,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'Results',
   props: {},
   methods: {},
   computed: {
-    githubResults() {
-      // get from store
-      return [];
-    }
+    ...mapGetters('GithubResults', {
+      results: 'results',
+    })
   },
   data() {
     return {};
