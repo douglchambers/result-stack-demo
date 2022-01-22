@@ -19,7 +19,6 @@ export default {
   props: {},
   methods: {
     submitSearch() {
-      console.log('searchValue: ', this.searchValue);
       this.$store.dispatch('GithubResults/search', this.searchValue);
     },
   },
