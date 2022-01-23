@@ -58,9 +58,12 @@ export default {
   watch: {
     currentPage: {
       handler(newPage) {
-        console.log('watch currentPage: ', newPage, this.query);
+        window.scroll({
+          top: 0,
+          left: 0,
+          behavior: 'smooth'
+        });
         this.$store.dispatch('GithubResults/search', { query: this.query, pageNum: newPage });
-        window.scrollTo(0, 0);
       },
     }
   },

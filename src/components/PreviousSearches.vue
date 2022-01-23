@@ -29,7 +29,6 @@ export default {
   props: {},
   methods: {
     setSearch(query) {
-      console.log('emitting: ', query);
       this.$emit('resetSearch', query);
       return false;
     }

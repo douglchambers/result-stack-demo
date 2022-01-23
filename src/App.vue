@@ -27,7 +27,6 @@ export default {
   },
   methods: {
     resetSearch(evt) {
-      console.log('resetSearch: ', evt);
       this.searchQuery = evt;
       this.$store.dispatch('GithubResults/search', { query: this.searchQuery, pageNum: 1 });
 
