@@ -2,11 +2,13 @@
   <div class="github-search">
     <b-form-input
         v-model="searchValue"
+        class="search-input"
         placeholder="Name, email address or user name"
         @keypress.enter="submitSearch"
         />
     <b-button
       variant="primary"
+      class="search-button"
       @click="submitSearch"
       >
       Search
@@ -40,5 +42,19 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+.github-search {
+  grid-column-start: span 2;
+  display: flex;
+  flex-direction: row;
+  justify-items: space-between;
+  align-items: center;
+
+  .search-input {
+    width: 80%;
+  }
+  .search-button {
+    margin: 0 1rem;
+  }
+}
 </style>

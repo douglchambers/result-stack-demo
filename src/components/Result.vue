@@ -2,9 +2,8 @@
   <div class="github-result">
     <div class="avatar">
       <b-img
+          class="avatar"
         :src="result.avatarUrl"
-        width="144"
-        height="144"
       />
     </div>
     <div class="primary-info">
@@ -22,18 +21,18 @@
       <a :href="result.profileUrl" target="_blank">View Profile</a>
     </div>
     <div class="secondary-info">
-      <h3>
+      <h5>
         Location: {{ result.location }}
-      </h3>
-      <h4>
+      </h5>
+      <h5>
         Created At: {{ result.createdAt }}
-      </h4>
-      <h4>
+      </h5>
+      <h5>
         Last Updated At: {{ result.lastUpdate }}
-      </h4>
-      <h4>
+      </h5>
+      <h5>
         Num Public Repos: {{ result.numPublicRepos }}
-      </h4>
+      </h5>
     </div>
     <div class="bio">
       <p>
@@ -58,5 +57,34 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+.github-result {
+  display: grid;
+  grid-template-columns: 144px 1fr 1fr;
+  justify-items: flex-start;
+  align-items: center;
+  text-align: left;
+
+  background: #CCCCCC;
+  padding: 1rem;
+
+  .avatar {
+    width: 72px;
+    height: 72px;
+  }
+
+  @media(max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .secondary-info {
+    grid-column-start: span 3;
+  }
+  .bio {
+    grid-column-start: span 3;
+  }
+}
 </style>

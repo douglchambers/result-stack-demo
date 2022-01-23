@@ -42,13 +42,25 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  text-align: left;
   color: #2c3e50;
-  margin-top: 60px;
+
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  @media(max-width: 767px) {
+    grid-template-columns: 1fr;
+  }
+  justify-items: stretch;
+  grid-gap: 1rem;
+
+  margin: 3rem;
+  @media(max-width: 767px) {
+    margin: 1rem;
+  }
 }
 </style>

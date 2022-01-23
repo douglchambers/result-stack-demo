@@ -1,5 +1,5 @@
 <template>
-  <div class="github-results">
+  <div class="previous-searches">
     <div
         v-if="searchHistory.length > 0"
     >
@@ -46,5 +46,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+.previous-searches {
+  //justify-self: flex-end;
+}
 </style>
