@@ -1,4 +1,5 @@
 import { Octokit } from 'octokit';
+import { AccessToken } from "@/lib/auth";
 
 // initial state
 const state = () => ({
@@ -41,7 +42,7 @@ const getters = {
 const actions = {
     async search({ commit, dispatch }, query, pageNum) {
         commit('setSearched', true);
-        const octokit = new Octokit();
+        const octokit = new Octokit({ auth: AccessToken });
         // const res = await octokit.search.users({ username: query });
         const queryString = `"${ query }" in:login OR "${ query}" in:name OR "${ query }" in:email`;
         console.log('searching for: ', queryString);
@@ -76,7 +77,7 @@ const actions = {
                 resolve();
             }
 
-            const octokit = new Octokit();
+            const octokit = new Octokit({ auth: AccessToken });
 
             octokit.request(`GET /user/${ userId }`).then((res) => {
                 if (res.data) {

@@ -60,7 +60,7 @@ export default {
 <style lang="scss" scoped>
 .github-result {
   display: grid;
-  grid-template-columns: 144px 1fr 1fr;
+  grid-template-columns: 80px 2fr 120px;
   justify-items: flex-start;
   align-items: center;
   text-align: left;
