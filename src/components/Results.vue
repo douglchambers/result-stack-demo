@@ -7,6 +7,12 @@
       <div
           v-if="results.length > 0"
       >
+        <b-pagination
+            v-model="currentPage"
+            :total-rows="numResults"
+            :per-page="perPage"
+            aria-controls="my-table"
+        ></b-pagination>
         <div
             v-for="result in results"
             :key="result.id"
@@ -15,6 +21,12 @@
             :result="result"
           />
         </div>
+        <b-pagination
+            v-model="currentPage"
+            :total-rows="numResults"
+            :per-page="perPage"
+            aria-controls="my-table"
+        ></b-pagination>
       </div>
       <div
           v-else
@@ -41,10 +53,22 @@ export default {
       results: 'resultsForSearch',
       numResults: 'numResultsForSearch',
       hasSearched: 'hasSearched',
-    })
+    }),
+  },
+  watch: {
+    currentPage: {
+      handler(newPage) {
+        console.log('watch currentPage: ', newPage, this.query);
+        this.$store.dispatch('GithubResults/search', { query: this.query, pageNum: newPage });
+        window.scrollTo(0, 0);
+      },
+    }
   },
   data() {
-    return {};
+    return {
+      currentPage: 1,
+      perPage: 30,
+    };
   }
 }
 </script>

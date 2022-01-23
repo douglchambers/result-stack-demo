@@ -41,12 +41,12 @@ const getters = {
 
 // actions
 const actions = {
-    async search({ commit, dispatch }, query, pageNum) {
+    async search({ commit, dispatch }, { query, pageNum }) {
         commit('setSearched', true);
         const octokit = new Octokit({ auth: AccessToken });
         // const res = await octokit.search.users({ username: query });
         const queryString = `"${ query }" in:login OR "${ query}" in:name OR "${ query }" in:email`;
-        console.log('searching for: ', queryString);
+        console.log('searching for: ', queryString, pageNum);
         const q = queryString;
         // const id = '566990';
         const res = await octokit.request('GET /search/users', {

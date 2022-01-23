@@ -22,7 +22,7 @@ export default {
   props: [],
   methods: {
     submitSearch() {
-      this.$store.dispatch('GithubResults/search', this.searchValue, 1);
+      this.$store.dispatch('GithubResults/search', { query: this.searchValue, pageNum: 1 });
       this.$emit('search', this.searchValue);
     },
   },
