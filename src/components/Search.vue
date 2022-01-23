@@ -3,6 +3,7 @@
     <b-form-input
         v-model="searchValue"
         placeholder="Name, email address or user name"
+        @keypress.enter="submitSearch"
         />
     <b-button
       variant="primary"
@@ -16,20 +17,20 @@
 <script>
 export default {
   name: 'Search',
-  props: [
-    'query',
-  ],
+  props: [],
   methods: {
     submitSearch() {
       this.$store.dispatch('GithubResults/search', this.searchValue, 1);
+      this.$emit('search', this.searchValue);
     },
   },
-  updated() {
-    if (this.searchValue != this.query && this.query != '') {
-      this.searchValue = this.query;
-      this.submitSearch();
-    }
-  },
+  // updated() {
+  //   console.log('updated');
+  //   if (this.searchValue != this.query && this.query != '') {
+  //     this.searchValue = this.query;
+  //     this.submitSearch();
+  //   }
+  // },
   data() {
     return {
       searchValue: '',

@@ -14,7 +14,7 @@
             href="javascript;"
             @click.prevent="setSearch(search.query)"
         >
-          {{ search.query }}: {{ search.numResults }} result<span v-if="search.numResults > 1">s</span>
+          {{ search.query }}: {{ search.numResults.toLocaleString() }} result<span v-if="search.numResults > 1">s</span>
         </a>
       </div>
     </div>

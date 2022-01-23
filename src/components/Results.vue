@@ -2,38 +2,45 @@
   <div class="github-results">
     <div
       v-if="hasSearched">
-      Showing Results for: "{{ }}
-    </div>
-    <div
-        v-if="results.length > 0"
-    >
+      Showing Results for: "{{ query }}"<br>
+      {{ numResults.toLocaleString() }} records found.
       <div
-        v-for="result in results"
-        :key="result.id"
-        >
-        <pre>
-          {{ result }}
-        </pre>
-      </div>
-    </div>
-    <div
-      v-else
+          v-if="results.length > 0"
       >
-      No results available yet
+        <div
+            v-for="result in results"
+            :key="result.id"
+        >
+          <Result
+            :result="result"
+          />
+        </div>
+      </div>
+      <div
+          v-else
+      >
+        No results found
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Result from "@/components/Result";
 
 export default {
   name: 'Results',
-  props: {},
+  components: {Result},
+  props: [
+      'query',
+  ],
   methods: {},
   computed: {
     ...mapGetters('GithubResults', {
       results: 'resultsForSearch',
+      numResults: 'numResultsForSearch',
+      hasSearched: 'hasSearched',
     })
   },
   data() {

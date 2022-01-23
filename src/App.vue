@@ -2,8 +2,11 @@
   <div id="app">
     <Search
       :query="searchQuery"
+      @search="setSearchQuery"
     />
-    <Results />
+    <Results
+      :query="searchQuery"
+    />
     <PreviousSearches
       @resetSearch="resetSearch"
     />
@@ -26,7 +29,10 @@ export default {
     resetSearch(evt) {
       console.log('resetSearch: ', evt);
       this.searchQuery = evt;
-    }
+    },
+    setSearchQuery(evt) {
+      this.searchQuery = evt;
+    },
   },
   data() {
     return {

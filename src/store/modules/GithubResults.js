@@ -5,6 +5,7 @@ const state = () => ({
     githubResults: {},
     idsForSearch: [],
     totalResults: 0,
+    hasSearched: false,
     previousSearches: []
 })
 
@@ -27,12 +28,19 @@ const getters = {
             }
         });
         return results;
-    }
+    },
+    numResultsForSearch: (state) => {
+        return state.totalResults;
+    },
+    hasSearched: (state) => {
+        return state.hasSearched;
+    },
 }
 
 // actions
 const actions = {
     async search({ commit, dispatch }, query, pageNum) {
+        commit('setSearched', true);
         const octokit = new Octokit();
         // const res = await octokit.search.users({ username: query });
         const queryString = `"${ query }" in:login OR "${ query}" in:name OR "${ query }" in:email`;
@@ -49,26 +57,35 @@ const actions = {
 
         commit('setTotalResults', numResults)
         const idsForSearch = [];
+        const userPromises = [];
         userResults.forEach((ur) => {
-            dispatch('getUserInfo', ur.id);
+            const userPromise = dispatch('getUserInfo', ur.id);
+            userPromises.push(userPromise);
             idsForSearch.push(ur.id);
         });
-        commit('setIdsForSearch', idsForSearch);
-        commit('addSearchHistory', { query, numResults })
-        // commit('setResults', res);
+
+        Promise.all(userPromises).then(() => {
+            commit('setIdsForSearch', idsForSearch);
+            commit('addSearchHistory', { query, numResults })
+        });
     },
     async getUserInfo({ commit, state }, userId) {
-        if (state.githubResults[userId]) {
-            // don't re-pull a result if we have it already
-            return;
-        }
+        return new Promise( (resolve, reject) => {
+            if (state.githubResults[userId]) {
+                // don't re-pull a result if we have it already
+                resolve();
+            }
 
-        const octokit = new Octokit();
-        const res = await octokit.request(`GET /user/${ userId }`);
-        console.log('user query: ', res);
-        if (res.data) {
-            commit('setUserResult', res.data);
-        }
+            const octokit = new Octokit();
+
+            octokit.request(`GET /user/${ userId }`).then((res) => {
+                if (res.data) {
+                    commit('setUserResult', res.data);
+                    resolve();
+                }
+                reject();
+            });
+        });
     }
 }
 /*
@@ -109,7 +126,10 @@ const actions = {
  */
 // mutations
 const mutations = {
-    setUserResult(state,user) {
+    setSearched(state, val) {
+        state.hasSearched = val;
+    },
+    setUserResult(state, user) {
         const userObj = {
             id: user.id,
             username: user.login,
@@ -123,7 +143,6 @@ const mutations = {
             createdAt: user.created_at,
             lastUpdate: user.updated_at,
         }
-
         state.githubResults[user.id] = userObj;
     },
     setIdsForSearch(state, idsForSearch) {
@@ -156,7 +175,6 @@ const mutations = {
                 numResults,
             }];
         }
-        console.log('previousSearches: ', state.previousSearches);
         if (state.previousSearches.length > 10) {
             state.previousSearches.slice(0, 10);
         }
