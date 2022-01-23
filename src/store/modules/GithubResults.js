@@ -1,5 +1,6 @@
 import { Octokit } from 'octokit';
 import { AccessToken } from "@/lib/auth";
+import moment from 'moment'
 
 // initial state
 const state = () => ({
@@ -72,8 +73,10 @@ const actions = {
     },
     async getUserInfo({ commit, state }, userId) {
         return new Promise( (resolve, reject) => {
-            if (state.githubResults[userId]) {
-                // don't re-pull a result if we have it already
+            const cachePeriod = moment().subtract(10, 'minutes');
+
+            if (state.githubResults[userId] && state.githubResults[userId].pulledAt > cachePeriod) {
+                // don't re-pull a result if we have it already and cache hasn't expired
                 resolve();
             }
 
@@ -143,6 +146,7 @@ const mutations = {
             numPublicRepos: user.public_repos,
             createdAt: user.created_at,
             lastUpdate: user.updated_at,
+            pulledAt: moment(),
         }
         state.githubResults[user.id] = userObj;
     },

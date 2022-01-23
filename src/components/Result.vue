@@ -7,15 +7,15 @@
       />
     </div>
     <div class="primary-info">
-      <h1>
+      <h3>
         {{ result.name }}
-      </h1>
-      <h2>
+      </h3>
+      <h4>
         {{ result.username }}
-      </h2>
-      <h2>
+      </h4>
+      <h4>
         Email: {{ result.email }}
-      </h2>
+      </h4>
     </div>
     <div class="profile-link">
       <a :href="result.profileUrl" target="_blank">View Profile</a>
@@ -34,7 +34,10 @@
         Num Public Repos: {{ result.numPublicRepos }}
       </h5>
     </div>
-    <div class="bio">
+    <div
+      v-if="result.bio"
+      class="bio">
+      Bio:
       <p>
         {{ result.bio }}
       </p>
@@ -67,6 +70,7 @@ export default {
 
   background: #CCCCCC;
   padding: 1rem;
+  margin-bottom: 1rem;
 
   .avatar {
     width: 72px;
