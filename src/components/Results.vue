@@ -77,5 +77,10 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
+.github-results {
+  @media(max-width: 767px) {
+    text-align: center;
+  }
+}
 </style>

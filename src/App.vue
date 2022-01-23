@@ -53,12 +53,17 @@ export default {
 
   display: grid;
   grid-template-columns: 3fr 1fr;
-  @media(max-width: 767px) {
-    grid-template-columns: 1fr;
-  }
+
   justify-items: stretch;
   grid-gap: 1rem;
+  @media(max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 
+    text-align: center;
+  }
   margin: 3rem;
   @media(max-width: 767px) {
     margin: 1rem;
