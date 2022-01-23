@@ -74,12 +74,11 @@ const actions = {
     async getUserInfo({ commit, state }, userId) {
         return new Promise( (resolve, reject) => {
             const cachePeriod = moment().subtract(10, 'minutes');
-
             if (state.githubResults[userId] && state.githubResults[userId].pulledAt > cachePeriod) {
                 // don't re-pull a result if we have it already and cache hasn't expired
                 resolve();
+                return;
             }
-
             const octokit = new Octokit({ auth: AccessToken });
 
             octokit.request(`GET /user/${ userId }`).then((res) => {
