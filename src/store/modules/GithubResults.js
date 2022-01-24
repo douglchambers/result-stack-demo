@@ -141,8 +141,8 @@ const mutations = {
             email: user.email || 'not public',
             bio: user.bio,
             numPublicRepos: user.public_repos,
-            createdAt: user.created_at,
-            lastUpdate: user.updated_at,
+            createdAt: moment(user.created_at),
+            lastUpdate: moment(user.updated_at),
             pulledAt: moment(),
         }
         state.githubResults[user.id] = userObj;

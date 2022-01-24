@@ -1,16 +1,17 @@
 <template>
   <div class="github-search">
     <b-form-input
-        v-model="searchValue"
-        class="search-input"
-        placeholder="Name, email address or user name"
-        @keypress.enter="submitSearch"
-        />
+      v-model="searchValue"
+      class="search-input"
+      placeholder="Name, email address or user name"
+      @keypress.enter="submitSearch"
+    />
     <b-button
       variant="primary"
       class="search-button"
+      :disabled="!canSubmit"
       @click="submitSearch"
-      >
+    >
       Search
     </b-button>
   </div>
@@ -20,19 +21,19 @@
 export default {
   name: 'Search',
   props: [],
+  computed: {
+    canSubmit() {
+      return this.searchValue;
+    }
+  },
   methods: {
     submitSearch() {
-      this.$store.dispatch('GithubResults/search', { query: this.searchValue, pageNum: 1 });
-      this.$emit('search', this.searchValue);
+      if (this.canSubmit) {
+        this.$store.dispatch('GithubResults/search', {query: this.searchValue, pageNum: 1});
+        this.$emit('search', this.searchValue);
+      }
     },
   },
-  // updated() {
-  //   console.log('updated');
-  //   if (this.searchValue != this.query && this.query != '') {
-  //     this.searchValue = this.query;
-  //     this.submitSearch();
-  //   }
-  // },
   data() {
     return {
       searchValue: '',
@@ -47,7 +48,7 @@ export default {
   grid-column-start: span 2;
   display: flex;
   flex-direction: row;
-  justify-items: space-between;
+  justify-content: flex-start;
   align-items: center;
 
   .search-input {

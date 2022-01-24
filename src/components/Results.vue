@@ -3,7 +3,7 @@
     <div
       v-if="hasSearched">
       Showing Results for: "{{ query }}"<br>
-      {{ numResults.toLocaleString() }} records found.
+      {{ numResults.toLocaleString() }} record<span v-if="numResults > 1">s</span> found.
       <div
           v-if="results.length > 0"
       >
@@ -81,6 +81,13 @@ export default {
 .github-results {
   @media(max-width: 767px) {
     text-align: center;
+
+    .pagination {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 </style>

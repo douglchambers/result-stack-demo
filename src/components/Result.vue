@@ -1,10 +1,12 @@
 <template>
   <div class="github-result">
     <div class="avatar">
-      <b-img
+      <a :href="result.profileUrl" target="_blank">
+        <b-img
           class="avatar"
-        :src="result.avatarUrl"
-      />
+          :src="result.avatarUrl"
+        />
+      </a>
     </div>
     <div class="primary-info">
       <h3>
@@ -25,10 +27,10 @@
         Location: {{ result.location }}
       </h5>
       <h5>
-        Created At: {{ result.createdAt }}
+        Created At: {{ createdAt }}
       </h5>
       <h5>
-        Last Updated At: {{ result.lastUpdate }}
+        Last Updated At: {{ lastUpdated }}
       </h5>
       <h5>
         Num Public Repos: {{ result.numPublicRepos }}
@@ -46,13 +48,22 @@
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
   name: 'Result',
   props: [
     'result',
   ],
   methods: {},
-  computed: {},
+  computed: {
+    createdAt() {
+      return moment(this.result.createdAt).format('LLL');
+    },
+    lastUpdated() {
+      return moment(this.result.lastUpdate).format('LLL');
+    }
+  },
   data() {
     return {};
   }
@@ -71,10 +82,12 @@ export default {
   background: #CCCCCC;
   padding: 1rem;
   margin-bottom: 1rem;
+  border-radius: 8px;
 
   .avatar {
     width: 72px;
     height: 72px;
+    border-radius: 4px;
   }
 
   @media(max-width: 767px) {
